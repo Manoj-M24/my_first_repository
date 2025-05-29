@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Services Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-attachment: fixed;
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .category-btn {
+            background: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 12px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .category-btn.plumber {
+            color: #0077b6;
+        }
+        
+        .category-btn.electrician {
+            color: #ffaa00;
+        }
+        
+        .professionals-container {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            min-height: 400px;
+        }
+        
+        .professionals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .professionals-title {
+            font-size: 1.8rem;
+            color: #222;
+        }
+        
+        .sort-options {
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .professionals-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .professional-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .professional-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .plumber .avatar {
+            background: linear-gradient(45deg, #0077b6, #00b4d8);
+        }
+        
+        .electrician .avatar {
+            background: linear-gradient(45deg, #ff9500, #ffaa00);
+        }
+        
+        .professional-info {
+            flex: 1;
+        }
+        
+        .professional-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .professional-title {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .card-body {
+            padding: 0 20px 20px;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stars {
+            color: #ffc107;
+            display: flex;
+            gap: 2px;
+        }
+        
+        .rating-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .contact-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #0077b6, #00b4d8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .contact-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .electrician .contact-btn {
+            background: linear-gradient(to right, #ff8a00, #ffaa00);
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            margin-top: 40px;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .categories {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .category-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .professionals-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Professional Services Directory</h1>
+            <p class="subtitle">Find top-rated plumbers and electricians in your area. Click on a category below to view professionals sorted by highest rating.</p>
+        </header>
+        
+        <div class="categories">
+            <button class="category-btn plumber" onclick="showProfessionals('plumber')">
+                <i class="fas fa-faucet"></i> Plumbers
+            </button>
+            <button class="category-btn electrician" onclick="showProfessionals('electrician')">
+                <i class="fas fa-bolt"></i> Electricians
+            </button>
+        </div>
+        
+        <div class="professionals-container">
+            <div class="professionals-header">
+                <h2 class="professionals-title" id="category-title">Select a Category</h2>
+                <div class="sort-options">
+                    <span>Sorted by: Highest Rating</span>
+                </div>
+            </div>
+            
+            <div class="professionals-list" id="professionals-list">
+                <div class="empty-state">
+                    <i class="fas fa-hand-pointer"></i>
+                    <h3>Select a Category to View Professionals</h3>
+                    <p>Click on "Plumbers" or "Electricians" above to see top-rated professionals</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Professional Services Directory &copy; 2023 | Find Top-rated Professionals</p>
+        </footer>
+    </div>
+
+    <script>
+        // Sample data for professionals
+        const professionals = {
+            plumber: [
+                { id: 1, name: "John Smith", rating: 9.5, title: "Master Plumber", experience: "12 years", jobs: 245, area: "Downtown" },
+                { id: 2, name: "Robert Johnson", rating: 9.2, title: "Pipe Specialist", experience: "8 years", jobs: 180, area: "North District" },
+                { id: 3, name: "Michael Brown", rating: 8.8, title: "Emergency Repair", experience: "15 years", jobs: 320, area: "Westside" },
+                { id: 4, name: "David Wilson", rating: 8.5, title: "Leak Detection Expert", experience: "10 years", jobs: 210, area: "East End" },
+                { id: 5, name: "James Taylor", rating: 8.2, title: "Installation Pro", experience: "7 years", jobs: 150, area: "South Quarter" },
+                { id: 6, name: "William Davis", rating: 7.9, title: "Residential Specialist", experience: "9 years", jobs: 190, area: "Central" }
+            ],
+            electrician: [
+                { id: 1, name: "Sarah Johnson", rating: 9.7, title: "Master Electrician", experience: "14 years", jobs: 310, area: "Central" },
+                { id: 2, name: "Jennifer Williams", rating: 9.4, title: "Wiring Specialist", experience: "11 years", jobs: 275, area: "North District" },
+                { id: 3, name: "Linda Miller", rating: 9.1, title: "Commercial Expert", experience: "16 years", jobs: 420, area: "Downtown" },
+                { id: 4, name: "Patricia Davis", rating: 8.9, title: "Home Safety Inspector", experience: "9 years", jobs: 195, area: "South Quarter" },
+                { id: 5, name: "Elizabeth Wilson", rating: 8.6, title: "Smart Home Installer", experience: "6 years", jobs: 140, area: "Westside" },
+                { id: 6, name: "Mary Anderson", rating: 8.3, title: "Emergency Electrician", experience: "12 years", jobs: 280, area: "East End" }
+            ]
+        };
+        
+        // Function to show professionals by category
+        function showProfessionals(category) {
+            const categoryTitle = document.getElementById('category-title');
+            const professionalsList = document.getElementById('professionals-list');
+            
+            // Set the category title
+            if (category === 'plumber') {
+                categoryTitle.textContent = 'Top Plumbers';
+            } else {
+                categoryTitle.textContent = 'Top Electricians';
+            }
+            
+            // Clear current list
+            professionalsList.innerHTML = '';
+            
+            // Get professionals for the selected category and sort by rating (descending)
+            const pros = professionals[category].sort((a, b) => b.rating - a.rating);
+            
+            // Generate HTML for each professional
+            pros.forEach(pro => {
+                const card = document.createElement('div');
+                card.className = `professional-card ${category}`;
+                
+                // Generate star rating HTML
+                let starsHtml = '';
+                const fullStars = Math.floor(pro.rating);
+                const halfStar = (pro.rating - fullStars) >= 0.5;
+                
+                for (let i = 0; i < fullStars; i++) {
+                    starsHtml += '<i class="fas fa-star"></i>';
+                }
+                
+                if (halfStar) {
+                    starsHtml += '<i class="fas fa-star-half-alt"></i>';
+                }
+                
+                const emptyStars = 10 - fullStars - (halfStar ? 1 : 0);
+                for (let i = 0; i < emptyStars; i++) {
+                    starsHtml += '<i class="far fa-star"></i>';
+                }
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="avatar">${pro.name.charAt(0)}</div>
+                        <div class="professional-info">
+                            <div class="professional-name">${pro.name}</div>
+                            <div class="professional-title">${pro.title}</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">
+                            <div class="stars">${starsHtml}</div>
+                            <div class="rating-value">${pro.rating}/10</div>
+                        </div>
+                        <div class="details">
+                            <div><i class="fas fa-briefcase"></i> ${pro.experience}</div>
+                            <div><i class="fas fa-tasks"></i> ${pro.jobs} jobs</div>
+                        </div>
+                        <div class="details">
+                            <div><i class="fas fa-map-marker-alt"></i> ${pro.area}</div>
+                        </div>
+                        <button class="contact-btn">Contact ${pro.name.split(' ')[0]}</button>
+                    </div>
+                `;
+                
+                professionalsList.appendChild(card);
+            });
+        }
+        
+        // Add initial animation to cards when page loads
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.professional-card');
+            cards.forEach((card, index) => {
+                card.style.animation = `fadeIn 0.5s ease ${index * 0.1}s forwards`;
+                card.style.opacity = 0;
+            });
+        });
+    </script>
+</body>
+</html>
